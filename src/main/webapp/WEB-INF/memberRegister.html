@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원가입</title>
+  <style>
+    body {
+      background-color: lightgray;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+    }
+    .container {
+      width: 450px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+    }
+    .description {
+      font-size: 14px;
+      color: gray;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 25px;
+    }
+    label.input-label {
+      display: block;
+      font-size: 15px;
+      font-weight: bold;
+      color: black;
+      margin-bottom: 8px;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid lightgray;
+      border-radius: 5px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: gray;
+    }
+    .input-hint, .input-error, .selection-status {
+      font-size: 13px;
+      color: gray;
+      margin-top: 6px;
+      margin-left: 2px;
+      display: block;
+    }
+    .radio-group, .checkbox-group {
+      border: 1px solid lightgray;
+      border-radius: 6px;
+      padding: 5px;
+      background-color: white;
+    }
+    .group-label {
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .radio-options {
+      display: flex;
+      margin-right: 100px;
+    }
+    .checkbox-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px 30px;
+      padding-bottom: 10px;
+    }
+
+    .custom-radio input[type="radio"],
+    .custom-checkbox input[type="checkbox"] {
+      display: none;
+    }
+    .custom-radio label,
+    .custom-checkbox label {
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+      padding-left: 28px;
+      cursor: pointer;
+      font-size: 15px;
+      color: #555;
+      user-select: none;
+    }
+    .custom-radio label::before,
+    .custom-checkbox label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      box-sizing: border-box;
+      border-radius: 50%;
+    }
+    .custom-checkbox label::before {
+      border-radius: 3px;
+    }
+    .custom-radio input[type="radio"]:checked,
+    .custom-checkbox input[type="checkbox"]:checked {
+      border-color: #007bff;
+      background-color: #007bff;
+    }
+    .custom-radio input[type="radio"]:checked {
+      content: '';
+      left: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background-color: #fff;
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+    .custom-checkbox input[type="checkbox"]:checked {
+      content: '✓';
+      position: absolute;
+      left: 0px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #fff;
+      line-height: 1;
+      width: 18px;
+      text-align: center;
+    }
+
+    .checkbox-options > div {
+      flex: 1 1 40%;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+    button {
+      width: 48%;
+      padding: 13px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    button.submit {
+      background-color: #007bff;
+      color: white;
+    }
+    button.reset {
+      background-color: #f0f0f0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>회원가입</h2>
+  <p class="description">아이디, 비밀번호, 성별, 취미를 입력해 주세요.</p><hr>
+
+  <form action="memberRegister" method="post">
+    <div class="form-group">
+      <label for="userid" class="input-label">아이디</label>
+      <input type="text" id="userid" name="userid" placeholder="예: yumi_123" required>
+      <span class="input-hint">영문, 숫자, 밑줄(_)만 사용 가능. 3~20자.</span>
+    </div>
+
+    <div class="form-group">
+      <label for="password" class="input-label">비밀번호</label>
+      <input type="password" id="password" name="password" placeholder="비밀번호 입력" required>
+      <span class="input-hint">6자 이상을 권장합니다.</span>
+    </div>
+
+    <div class="form-group">
+      <label for="passwordCheck" class="input-label">비밀번호 확인</label>
+      <input type="password" id="passwordCheck" name="passwordCheck" placeholder="비밀번호 재입력" required>
+      <span class="input-error" id="passwordError">비밀번호를 다시 입력하세요.</span>
+    </div>
+
+    <div class="form-group radio-group">
+      <span class="group-label">성별</span>
+      <div class="radio-options">
+        <div class="custom-radio">
+          <input type="radio" id="male" name="gender" value="남성" required>
+          <label for="male">남성</label>
+        </div>
+        <div class="custom-radio">
+          <input type="radio" id="female" name="gender" value="여성">
+          <label for="female">여성</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group checkbox-group">
+      <span class="group-label">취미 (복수 선택 가능)</span>
+      <div class="checkbox-options">
+        <div class="custom-checkbox">
+          <input type="checkbox" id="reading" name="hobbies" value="독서">
+          <label for="reading">독서</label>
+        </div>
+        <div class="custom-checkbox">
+          <input type="checkbox" id="scuba" name="hobbies" value="스킨스쿠버">
+          <label for="scuba">스킨스쿠버</label>
+        </div>
+        <div class="custom-checkbox">
+          <input type="checkbox" id="swimming" name="hobbies" value="수영">
+          <label for="swimming">수영</label>
+        </div>
+        <div class="custom-checkbox">
+          <input type="checkbox" id="biking" name="hobbies" value="자전거">
+          <label for="biking">자전거</label>
+        </div>
+        <div class="custom-checkbox">
+          <input type="checkbox" id="running" name="hobbies" value="러닝">
+          <label for="running">러닝</label>
+        </div>
+      </div>
+      <span class="selection-status">선택 사항입니다.</span>
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="submit">가입하기</button>
+      <button type="reset" class="reset">다시 입력</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
