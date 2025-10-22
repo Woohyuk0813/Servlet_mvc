@@ -13,7 +13,7 @@ public class MemberDAO {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("JDBC Driver Not Found", e);
+            throw new RuntimeException(e);
         }
     }
 
