@@ -11,7 +11,7 @@ public class MemberDAO {
 
     static {
         try {
-            Class.forName(DRIVER);
+            Class.forName(driver);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
