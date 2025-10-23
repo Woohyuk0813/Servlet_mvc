@@ -19,7 +19,7 @@ public class MemberRegisterController extends HttpServlet {
         String user_id = request.getParameter("user_id");
         String user_pwd = request.getParameter("user_pwd");
         String gender = request.getParameter("gender");
-        String[] hobby = request.getParameterValues("hobby");
+        String[] hobby = request.getParameterValues("hobby"); //null 처리
 
         MemberVO member = new MemberVO();
         member.setUser_id(user_id);
@@ -35,7 +35,7 @@ public class MemberRegisterController extends HttpServlet {
         if (result > 0) {
             message = user_id + " 님 회원가입 성공하였습니다.";
         } else {
-            message = "다시 시도해주세요.";
+            message = "가입에 실패하였습니다. 다시 시도해주세요.";
         }
 
         request.setAttribute("message", message);
