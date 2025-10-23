@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script type="text/javascript">
+    function fn_validate(){
+      let frmRegister = document.frmRegister;
+      let user_id = frmRegister.user_id.value;
+      let user_pwd = frmRegister.user_pwd.value;
+      let user_pwd_check = frmRegister.user_pwd_check.value;
+
+      if((user_id.length === 0 || user_id == "") || ( user_pwd.length === 0 || user_pwd == "")){
+        alert("아이디와 비밀번호 입력은 필수입니다.")
+      }
+      else if(user_pwd !== user_pwd_check){
+        alert("비밀번호가 일치하지 않습니다.")
+      } else{
+        frmRegister.method = "post";
+        frmRegister.action = "register";
+        frmRegister.submit();
+      }
+    }
+
+  </script>
+</head>
+<body>
+<form name="frmRegister" enctype="UTF-8">
+  아이디 <br>
+  <input type="text" name="user_id" placeholder="예: yumi_123"><br>
+  비밀번호  <br>
+  <input type="password" name="user_pwd" placeholder="비밀번호 입력"><br>
+  비밀번호 확인 <br>
+  <input type="password" name="user_pwd_check" placeholder="비밀번호 재입력"><br>
+  성별<br>
+  <input type="radio" name="gender" value="남성" checked> 남성
+  <input type="radio" name="gender" value="여성"> 여성
+  <br>
+  취미 (복수 선택 가능)<br>
+  <input type="checkbox" name="hobby" value="독서"> 독서
+  <input type="checkbox" name="hobby" value="스킨스쿠버"> 스킨스쿠버
+  <input type="checkbox" name="hobby" value="수영"> 수영
+  <input type="checkbox" name="hobby" value="자전거"> 자전거
+  <input type="checkbox" name="hobby" value="러닝"> 러닝
+
+  <input type="button" value="가입하기" onclick="fn_validate()">
+  <input type="reset" value="다시 입력">
+
+
+</form>
+</body>
+</html>

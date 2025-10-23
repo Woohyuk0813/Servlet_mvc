@@ -1,37 +1,52 @@
 package com.ssg.member;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class MemberDAO {
 
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/root?serverTimezone=Asia/Seoul&charEncoding=UTF-8";
-    private static final String USER = "root";
-    private static final String PASS = "root123";
+    private Connection conn;
+    private PreparedStatement pstmt;
 
-    static {
+    private void ConnDB(){
         try {
-            Class.forName(DRIVER);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("드라이버 로딩 성공");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sqldb?serverTimezone=Asia/Seoul&charEncoding=UTF-8","root","!wodbs4906");
+            System.out.println("Connection 생성 성공");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("드라이버가 존재하지 않습니다.");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     public int addMember(MemberVO member) {
-        String INSERT_SQL = "INSERT INTO memberInfo (userid, password, gender, hobbies) VALUES (?, ?, ?, ?)";
         int result = 0;
+        try {
+            ConnDB();
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
-             PreparedStatement pstmt = conn.prepareStatement(INSERT_SQL)) {
+            String user_id = member.getUser_id();
+            String user_pwd = member.getUser_pwd();
+            String gender = member.getGender();
+            String hobby = String.join(",", member.getHobby());
 
-            pstmt.setString(1, member.getUserid());
-            pstmt.setString(2, member.getPassword());
-            pstmt.setString(3, member.getGender());
-            pstmt.setString(4, member.getHobbies());
+            String sql = "INSERT INTO memberInfo (user_id, user_pwd, gender, hobby) VALUES (?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, user_id);
+            pstmt.setString(2, user_pwd);
+            pstmt.setString(3, gender);
+            pstmt.setString(4, hobby);
 
             result = pstmt.executeUpdate();
 
-        } catch (SQLException e) {
+            pstmt.close();
+            conn.close();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
